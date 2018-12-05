@@ -37,3 +37,5 @@ urlpatterns = [
     url('^$', index),
     url('^upload/?$', upload)
 ]
+
+print('i am debugging :)')
