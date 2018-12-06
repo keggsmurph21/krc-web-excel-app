@@ -6,6 +6,7 @@ from django.views.decorators.http import require_http_methods
 
 DEBUG = True
 SECRET_KEY = os.environ.get('SECRET_KEY')
+ALLOWED_HOSTS = ['*']
 ROOT_URLCONF = __name__
 TEMPLATES = [{
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
