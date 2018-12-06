@@ -1,10 +1,11 @@
+import os
 from django.conf.urls import url
 from django.http import HttpResponse
 from django.template.loader import get_template
 from django.views.decorators.http import require_http_methods
 
 DEBUG = True
-SECRET_KEY = 'This is a secret'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 ROOT_URLCONF = __name__
 TEMPLATES = [{
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -37,5 +38,3 @@ urlpatterns = [
     url('^$', index),
     url('^upload/?$', upload)
 ]
-
-print('i am debugging :)')
