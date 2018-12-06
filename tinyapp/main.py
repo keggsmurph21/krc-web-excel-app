@@ -1,4 +1,6 @@
 import os
+import traceback
+
 from django.conf.urls import url
 from django.http import HttpResponse
 from django.template.loader import get_template
@@ -26,14 +28,24 @@ def index(req):
 @require_http_methods(['POST'])
 def upload(req):
 
-    file = req.FILES['file']
+    try:
 
-    # do processing here
+        file = req.FILES['file']
 
-    template = get_template('upload.html')
-    html = template.render({ 'filename': file.name })
+        # do processing here
 
-    return HttpResponse(html)
+        template = get_template('upload.html')
+        html = template.render({ 'filename': file.name })
+
+        return HttpResponse(html)
+
+    except:
+
+        tb = traceback.format_exc()
+        template = get_template('upload_error.html')
+        html = template.render({ 'trace': tb })
+
+        return HttpResponse(html)
 
 urlpatterns = [
     url('^$', index),
