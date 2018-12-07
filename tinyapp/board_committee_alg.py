@@ -250,9 +250,41 @@ def print_results(results):
         for j in range(len(results[i][1][1])):
             print("        %d. %s" % (j+1, results[i][1][1][j]))
 
+def results_to_str_arr(results):
 
-if __name__ == '__main__':
-    df = pd.read_excel('committees.xlsx')
+    arr = []
+
+    arr.append("Here are your top five schedules with three time slots and as few conflicts as possible:")
+
+    for i in range(0,10,2):
+        arr.append("_"*100)
+        arr.append("")
+        arr.append("%d) %d total missed meetings" % ((i/2)+1, results[i][0]))
+        arr.append("")
+        arr.append("   Time slot 1:" )
+        arr.append("          1. %s" % results[i][1][0][0])
+        arr.append("          2. %s" % results[i][1][0][1])
+        arr.append("          3. %s" % results[i][1][0][2])
+
+        arr.append("     Time slot 2:")
+        arr.append("          1. %s" % results[i][1][0][3])
+        arr.append("          2. %s" % results[i][1][0][4])
+        arr.append("          3. %s" % results[i][1][0][5])
+
+        arr.append("     Time slot 3:")
+        arr.append("          1. %s" % results[i][1][0][6])
+        arr.append("          2. %s" % results[i][1][0][7])
+        arr.append("")
+
+        arr.append("  If you go with this schedule, the following people will have to miss at least one meeting: ")
+        for j in range(len(results[i][1][1])):
+            arr.append("        %d. %s" % (j+1, results[i][1][1][j]))
+
+    return arr
+
+def read_and_print(fp):
+
+    df = pd.read_excel(fp)
     committees = np.array(df.columns[1:])
     committees = committees.tolist()
     arr = df.as_matrix()
@@ -265,8 +297,16 @@ if __name__ == '__main__':
 
     results = calculate_results_array(unique_committee_pairings, missed_meetings2, missed_meetings3)
     results.sort(key=operator.itemgetter(0))
-    print_results(results)
 
+    arr = results_to_str_arr(results)
+    return arr
+
+    #print_results(results)
+
+if __name__ == '__main__':
+
+    with open('committees.xlsx', 'rb') as fp:
+        read_and_print(fp)
 
 # In[ ]:
 

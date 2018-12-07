@@ -5,6 +5,7 @@ from django.conf.urls import url
 from django.http import HttpResponse
 from django.template.loader import get_template
 from django.views.decorators.http import require_http_methods
+from tinyapp.board_committee_alg import read_and_print
 
 DEBUG = True
 SECRET_KEY = os.environ.get('SECRET_KEY')
@@ -32,10 +33,13 @@ def upload(req):
 
         file = req.FILES['file']
 
-        # do processing here
+        output = '\n'.join(read_and_print(file))
 
         template = get_template('upload.html')
-        html = template.render({ 'filename': file.name })
+        html = template.render({
+            'filename': file.name,
+            'output': output,
+        })
 
         return HttpResponse(html)
 
