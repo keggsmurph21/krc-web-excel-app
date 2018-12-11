@@ -122,7 +122,11 @@ def find_num_missed_meetings3(cmte1, cmte2, cmte3):
     #given three committees ([(name,type), (name, type),...]), find the number of missed meetings between the two committees.
     #If, in any conflict, the board member is a vice chair or chair for both, set the conflicts to a very high number.
 
-    all_names = cmte1 + cmte2 + cmte3
+
+    all_names = []
+    all_names.extend(cmte1)
+    all_names.extend(cmte2)
+    all_names.extend(cmte3)
     conflicts = 0
     people = []
 
@@ -177,9 +181,9 @@ def find_missed_meetings3(people_on_committees, committees):
 
     missed_meetings3 = []
 
-    for i in range(len(committees)-1):
-        for j in range(len(committees)-1):
-            for k in range(len(committees)-1):
+    for i in range(len(committees)):
+        for j in range(len(committees)):
+            for k in range(len(committees)):
                 num_conflicts, people = find_num_missed_meetings3(people_on_committees[i], people_on_committees[j], people_on_committees[k])
                 array = [[committees[i], committees[j], committees[k]], num_conflicts, people]
                 missed_meetings3.append(array)
